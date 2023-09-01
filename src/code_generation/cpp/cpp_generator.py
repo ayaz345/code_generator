@@ -112,8 +112,9 @@ class CppLanguageElement(object):
         Ensure that all properties that passed to the CppLanguageElement are recognized.
         Raise an exception otherwise
         """
-        unknown_properties = input_property_names.difference(self.availablePropertiesNames)
-        if unknown_properties:
+        if unknown_properties := input_property_names.difference(
+            self.availablePropertiesNames
+        ):
             raise AttributeError(
                 f'Error: try to initialize {self.__class__.__name__} with unknown property: {repr(unknown_properties)}')
 

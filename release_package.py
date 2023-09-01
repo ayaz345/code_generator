@@ -175,7 +175,7 @@ def tag_release():
     git tag -a release.2.9.34 -m"Release 2.9.34"
     git push origin --tags master
     """
-    run(['git', 'tag', '-a', 'release.{}'.format(VERSION), '-m', 'Release {}'.format(VERSION)])
+    run(['git', 'tag', '-a', f'release.{VERSION}', '-m', f'Release {VERSION}'])
     run(['git', 'push', 'origin', '--tags', 'master'])
 
 
@@ -185,9 +185,19 @@ def create_release(release_file):
     Example:
     gh release create release.2.9.34 dist/{PACKAGE_NAME}-2.9.34-py3-none-any.whl --title 2.9.34 --notes-file RELEASE.md
     """
-    run(['gh', 'release', 'create', 'release.{}'.format(VERSION), wheel_path(),
-         '--title', '{}'.format(VERSION),
-         '--notes-file', release_file])
+    run(
+        [
+            'gh',
+            'release',
+            'create',
+            f'release.{VERSION}',
+            wheel_path(),
+            '--title',
+            f'{VERSION}',
+            '--notes-file',
+            release_file,
+        ]
+    )
 
 
 def release_version_exists(version):
@@ -198,7 +208,7 @@ def release_version_exists(version):
     """
     with open(os.path.join(PROJECT_DIR, 'RELEASE_NOTES.json'), 'r') as release_json:
         release_notes = json.load(release_json)
-    return True if version in release_notes['releases'] else False
+    return version in release_notes['releases']
 
 
 def tmp_release_notes():
@@ -224,9 +234,9 @@ def tmp_release_notes():
     with open(release_md, 'w') as release_tmp:
         release_tmp.write('## Release notes\n')
         for note in last_release:
-            release_tmp.write('* {}\n'.format(note))
+            release_tmp.write(f'* {note}\n')
         release_tmp.write('## Staging Area Download URL\n')
-        release_tmp.write('[Wheel Package {} on AWS S3]({})\n'.format(VERSION, release_url))
+        release_tmp.write(f'[Wheel Package {VERSION} on AWS S3]({release_url})\n')
     return os.path.abspath(release_md)
 
 

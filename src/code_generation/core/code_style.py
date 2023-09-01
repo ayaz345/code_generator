@@ -79,8 +79,9 @@ class HTMLStyle:
             with self.owner.last:
                 pass
         self.element = element
-        attributes = "".join(f' {attr}' for attr in attrs)
-        attributes += "".join(f' {key}="{value}"' for key, value in kwattrs.items())
+        attributes = "".join(f' {attr}' for attr in attrs) + "".join(
+            f' {key}="{value}"' for key, value in kwattrs.items()
+        )
         self.attributes = attributes
         self.owner.last = self
 

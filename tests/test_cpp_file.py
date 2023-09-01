@@ -24,7 +24,6 @@ class TestCppFileIo(unittest.TestCase):
         Test C++ variables generation
         """
         cpp = CppFile('array.cpp')
-        arrays = []
         a1 = CppArray(name='array1', type='int', is_const=True, array_size=5)
         a1.add_array_items(['1', '2', '3'])
         a2 = CppArray(name='array2', type='const char*', is_const=True)
@@ -34,10 +33,7 @@ class TestCppFileIo(unittest.TestCase):
         a3.add_array_item('"ItemNewline1"')
         a3.add_array_item('"ItemNewline2"')
 
-        arrays.append(a1)
-        arrays.append(a2)
-        arrays.append(a3)
-
+        arrays = [a1, a2, a3]
         for arr in arrays:
             arr.render_to_string(cpp)
         self.assertTrue(filecmp.cmpfiles('.', 'tests', 'array.cpp'))
