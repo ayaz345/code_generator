@@ -10,10 +10,7 @@ class HtmlFile:
         self.current_indent = 0
         self.last = None
         self.filename = filename
-        if writer:
-            self.out = writer
-        else:
-            self.out = open(filename, "w")
+        self.out = writer if writer else open(filename, "w")
 
     def close(self):
         """

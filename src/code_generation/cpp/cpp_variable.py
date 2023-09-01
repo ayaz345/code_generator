@@ -182,7 +182,7 @@ class CppVariable(CppLanguageElement):
         if not self.is_class_member:
             raise RuntimeError('For automatic variable use its render_to_string() method')
 
-        if self.documentation and self.is_class_member:
+        if self.documentation:
             cpp(dedent(self.documentation))
         cpp(f'{self._render_static()}{self._render_extern()}{self._render_const()}{self._render_constexpr()}'
             f'{self.type} {self.name if not self.is_constexpr else self.assignment(self._render_init_value())};')
